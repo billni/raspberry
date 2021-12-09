@@ -50,21 +50,25 @@ currenttime = 0
 
 # 开始进行炫彩闪烁
 while True:
-    # 通过占空比控制红色的占比
-	for r in range(0, 101, 20):
-		pR.ChangeDutyCycle(r)
-        # 通过占空比控制绿色的占比
-		for g in range(0, 101, 20):
-			pG.ChangeDutyCycle(g)
+    try:
+        # 通过占空比控制红色的占比
+        for r in range(0, 101, 20):
+            pR.ChangeDutyCycle(r)
+            # 通过占空比控制绿色的占比
+            for g in range(0, 101, 20):
+                pG.ChangeDutyCycle(g)
             # 空通过占空比控制蓝色的占比
-			for b in range(0, 101, 20):
-				pB.ChangeDutyCycle(b)
-				time.sleep(0.1)
-				currenttime += 1								
-                # 结束程序
-				if (currenttime > endtime):
-					pR.stop()
-					pG.stop()
-					pB.stop()
-					GPIO.cleanup()
-					sys.exit(0)
+                for b in range(0, 101, 20):
+                    pB.ChangeDutyCycle(b)
+                    time.sleep(0.1)
+                    currenttime += 1
+                    
+                    # 结束程序
+                    if (currenttime > endtime):
+                        pR.stop()
+                        pG.stop()
+                        pB.stop()
+    except KeyboardInterrupt:
+        break
+GPIO.cleanup()
+sys.exit(0)
